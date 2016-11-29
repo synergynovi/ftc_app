@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name = "experiment launcher speed", group = "K9bot")
+@TeleOp(name = "experiment launcher", group = "K9bot")
 public class TeleopTankv7experiment extends LinearOpMode {
 
     TeleOpHardwarev7 robot = new TeleOpHardwarev7();
