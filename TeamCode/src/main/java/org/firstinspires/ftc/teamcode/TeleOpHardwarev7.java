@@ -142,7 +142,7 @@ public class TeleOpHardwarev7 {
 
     public void launchTheBall() throws InterruptedException {
         launcherOn();
-        waitForTick(1500);
+        waitForTick(3500);
         setTriggerHigh();
     }
 
