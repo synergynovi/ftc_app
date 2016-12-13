@@ -120,8 +120,8 @@ public class TeleOpHardwarev7 {
         sweeperRight.setPower(-1 * power);
     }
 
-    public void launcherOn() {
-        setLauncherMaxSpeed(300);
+    public void launcherOn(int speed) {
+        setLauncherMaxSpeed(speed);
     }
 
     public void launcherOff() {
@@ -141,13 +141,21 @@ public class TeleOpHardwarev7 {
     }
 
     public void launchTheBall() throws InterruptedException {
-        launcherOn();
-        waitForTick(3500);
-        setTriggerHigh();
+        launcherOn(400);
+        launch();
     }
 
-    public void stopLaunchingBall() {
+    public void launchTheBall(int speed) throws InterruptedException {
+        launcherOn(speed);
+        launch();
+    }
+    private void launch() throws InterruptedException {
+        waitForTick(3500);
+        setTriggerHigh();
+        waitForTick(1000);
         launcherOff();
         setTriggerLow();
     }
+
+
 }

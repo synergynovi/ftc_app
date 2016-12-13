@@ -26,9 +26,7 @@ public class TeleopTankv7 extends LinearOpMode {
     }
 
     private void handleTriggerServo() throws InterruptedException {
-        if (gamepad2.dpad_down) {
-            robot.stopLaunchingBall();
-        }else if (gamepad2.dpad_up) {
+        if (gamepad2.dpad_up) {
            robot.launchTheBall();
         }
         say("Trigger position", robot.getTriggerPosition());

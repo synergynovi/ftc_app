@@ -3,33 +3,36 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name = "experiment launcher", group = "K9bot")
-public class TeleopTankv7experiment extends LinearOpMode {
+@TeleOp(name = "TeleopLauncherExperiment", group = "K9bot")
+public class TeleopLauncherExperiment extends LinearOpMode {
 
     TeleOpHardwarev7 robot = new TeleOpHardwarev7();
-
+    int launcherSpeed;
     @Override
     public void runOpMode() throws InterruptedException {
         String initMessage = robot.init(hardwareMap);
 
         waitForStart();
+        int launcherSpeed = 300;
         while (opModeIsActive()) {
             say(initMessage, "");
             moveRobot();
             handleForkLift();
             robot.setSweeperPower(gamepad2.right_stick_y);
-            handleTriggerServo();
+            handleLauncherTrigger();
             robot.waitForTick(40);
             telemetry.update();
             idle();
         }
     }
 
-    private void handleTriggerServo() throws InterruptedException {
-        if (gamepad2.dpad_down) {
-            robot.stopLaunchingBall();
-        }else if (gamepad2.dpad_up) {
-           robot.launchTheBall();
+    private void handleLauncherTrigger() throws InterruptedException {
+        if (gamepad2.right_bumper) {
+            launcherSpeed += 5;
+        } else if (gamepad2.left_bumper) {
+            launcherSpeed -= 5;
+        } else if (gamepad2.dpad_up) {
+            robot.launchTheBall(launcherSpeed);
         }
         say("Trigger position", robot.getTriggerPosition());
         say("Launcher speed", robot.getLauncherMaxSpeed());

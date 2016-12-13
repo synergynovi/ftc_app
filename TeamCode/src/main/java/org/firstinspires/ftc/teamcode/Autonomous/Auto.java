@@ -30,25 +30,22 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.autonomous;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.TeleOpHardwarev7;
 
 
+public abstract class Auto extends LinearOpMode {
 
-@Autonomous(name="SynergyAutoLaunchAndMove", group="Autonomous")
+    TeleOpHardwarev7 robot   = new TeleOpHardwarev7();   // Use a Pushbot's hardware
 
-public class SynergyAutoLaunchAndMove extends LinearOpMode {
-
-    TeleOpHardwarev7 robot   = new TeleOpHardwarev7();
     private ElapsedTime     runtime = new ElapsedTime();
-
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.14159265);
@@ -58,23 +55,14 @@ public class SynergyAutoLaunchAndMove extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
         robot.init(hardwareMap);
-
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "Resetting Encoders");    //
+        telemetry.addData("Status", "Resetting Encoders");
         telemetry.update();
-
         robot.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         idle();
-
         robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         telemetry.addData("Path0",  "Starting at %7d :%7d",
                           robot.leftMotor.getCurrentPosition(),
                           robot.rightMotor.getCurrentPosition());
@@ -82,25 +70,40 @@ public class SynergyAutoLaunchAndMove extends LinearOpMode {
 
         waitForStart();
 
-        robot.launchTheBall();
-        encoderDrive(DRIVE_SPEED,  33,  33, 9.0);
-//        encoderDrive(TURN_SPEED,   6, -6, 4.0);
+        launchIfRequired();
+        encoderDrive(DRIVE_SPEED,  33,  33, 5.0);
+        turn();
         encoderDrive(DRIVE_SPEED,  13, 13, 9.0);
         encoderDrive(DRIVE_SPEED,  0,  0, 10.0);
-        encoderDrive(DRIVE_SPEED,  12,  12, 3.0);
-
+        encoderDrive(DRIVE_SPEED,  14,  14, 3.0);
+        encoderDrive(DRIVE_SPEED,  -2,  -2, 3.0);
+        //encoderDrive(TURN_SPEED,   -2, 2, 4.0);
         sleep(1000);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
 
+    protected void turn() throws InterruptedException {
+        if (isTurnRight()) {
+            encoderDrive(TURN_SPEED,   6, -6, 4.0);
+        }
+    }
+
+    abstract protected boolean isTurnRight();
+
+    protected void launchIfRequired() throws InterruptedException {
+        if (shouldLaunch()){
+            robot.launchTheBall();
+        }
+    }
+    abstract protected boolean shouldLaunch();
+
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) throws InterruptedException {
         int newLeftTarget;
         int newRightTarget;
-
         if (opModeIsActive()) {
 
             newLeftTarget = robot.leftMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
@@ -124,7 +127,6 @@ public class SynergyAutoLaunchAndMove extends LinearOpMode {
                                             robot.leftMotor.getCurrentPosition(),
                                             robot.rightMotor.getCurrentPosition());
                 telemetry.update();
-
                 idle();
             }
 
@@ -133,8 +135,6 @@ public class SynergyAutoLaunchAndMove extends LinearOpMode {
 
             robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            //  sleep(250);   // optional pause after each move
         }
     }
 }
