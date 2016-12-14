@@ -33,7 +33,6 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -85,10 +84,10 @@ public class SynergyAutoBlue extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         encoderDrive(DRIVE_SPEED,  33,  33, 5.0);
-        turn();
+        encoderDrive(TURN_SPEED,   6, -6, 4.0);
         encoderDrive(DRIVE_SPEED,  13, 13, 9.0);
         encoderDrive(DRIVE_SPEED,  0,  0, 10.0);
-        encoderDrive(DRIVE_SPEED,  14,  14, 3.0);
+        encoderDrive(DRIVE_SPEED,  5,  5, 3.0);
         encoderDrive(DRIVE_SPEED,  -2,  -2, 3.0);
         //encoderDrive(TURN_SPEED,   -2, 2, 4.0);
         // S1: Forward 47 Inches with 5 Sec timeout
@@ -101,10 +100,6 @@ public class SynergyAutoBlue extends LinearOpMode {
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
-    }
-
-    protected void turn() throws InterruptedException {
-        encoderDrive(TURN_SPEED,   6, -6, 4.0);
     }
 
     protected void launch() throws InterruptedException {
