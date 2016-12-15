@@ -16,6 +16,7 @@ public class TeleOpHardwarev7 {
     public DcMotor rightMotor = null;
     public DcMotor forkliftLeft = null;
     public DcMotor forkliftRight = null;
+    public DcMotor scissorLift = null;
     private DcMotor launcher1 = null;
     private DcMotor launcher2 = null;
     public Servo triggerServo = null;
@@ -42,6 +43,10 @@ public class TeleOpHardwarev7 {
         forkliftRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         forkliftLeft.setPower(0);
         forkliftRight.setPower(0);
+        scissorLift = hardwareMap.dcMotor.get("scissor");
+        scissorLift.setPower(0);
+        scissorLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        scissorLift.setDirection(DcMotor.Direction.REVERSE);
     }
 
     private void initLauncher(HardwareMap hardwareMap) {

@@ -17,6 +17,7 @@ public class TeleopTankv7 extends LinearOpMode {
             say(initMessage, "");
             moveRobot();
             handleForkLift();
+            scissorLift();
             robot.setSweeperPower(gamepad2.right_stick_y);
             handleTriggerServo();
             robot.waitForTick(40);
@@ -51,6 +52,12 @@ public class TeleopTankv7 extends LinearOpMode {
         robot.forkliftLeft.setPower(power);
         robot.forkliftRight.setPower(power);
         say("fork lift power", power);
+    }
+    private void scissorLift(){
+        float scissorPower = (gamepad2.right_trigger);
+        robot.scissorLift.setPower(scissorPower);
+        say("scissor lift power", scissorPower);
+
     }
 
     private float squarePosition(float stickPosition) {
