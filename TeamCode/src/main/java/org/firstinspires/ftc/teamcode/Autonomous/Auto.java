@@ -106,6 +106,8 @@ public abstract class Auto extends LinearOpMode {
     protected void turn() throws InterruptedException {
         if (isTurnRight()) {
             encoderDrive(TURN_SPEED,   6, -6, 4.0);
+        } else {
+            encoderDrive(TURN_SPEED,   -6, 6, 4.0);
         }
     }
 
