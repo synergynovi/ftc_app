@@ -33,15 +33,14 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="SynergyAutoBlue", group="Autonomous")
-@Disabled
-public class SynergyAutoBlue extends LinearOpMode {
+@Autonomous(name="SynergyAutoRamp", group="Autonomous")
+
+public class RampBlue extends LinearOpMode {
 
 
     HardwarePushbot robot   = new HardwarePushbot();   // Use a Pushbot's hardware
@@ -51,7 +50,7 @@ public class SynergyAutoBlue extends LinearOpMode {
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-                                                      (WHEEL_DIAMETER_INCHES * 3.14159265);
+            (WHEEL_DIAMETER_INCHES * 3.14159265);
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
 
@@ -74,8 +73,8 @@ public class SynergyAutoBlue extends LinearOpMode {
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0",  "Starting at %7d :%7d",
-                          robot.leftMotor.getCurrentPosition(),
-                          robot.rightMotor.getCurrentPosition());
+                robot.leftMotor.getCurrentPosition(),
+                robot.rightMotor.getCurrentPosition());
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
@@ -85,11 +84,8 @@ public class SynergyAutoBlue extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         encoderDrive(DRIVE_SPEED,  33,  33, 5.0);
-        encoderDrive(TURN_SPEED,   6, -6, 4.0);
-        encoderDrive(DRIVE_SPEED,  13, 13, 9.0);
-        encoderDrive(DRIVE_SPEED,  0,  0, 10.0);
-        encoderDrive(DRIVE_SPEED,  5,  5, 3.0);
-        encoderDrive(DRIVE_SPEED,  -2,  -2, 3.0);
+        encoderDrive(TURN_SPEED, 18,  -9, 5.0);
+        encoderDrive(DRIVE_SPEED, 37, 37, 14);
         //encoderDrive(TURN_SPEED,   -2, 2, 4.0);
         // S1: Forward 47 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
@@ -141,14 +137,14 @@ public class SynergyAutoBlue extends LinearOpMode {
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (opModeIsActive() &&
-                   (runtime.seconds() < timeoutS) &&
-                   (robot.leftMotor.isBusy() && robot.rightMotor.isBusy())) {
+                    (runtime.seconds() < timeoutS) &&
+                    (robot.leftMotor.isBusy() && robot.rightMotor.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
                 telemetry.addData("Path2",  "Running at %7d :%7d",
-                                            robot.leftMotor.getCurrentPosition(),
-                                            robot.rightMotor.getCurrentPosition());
+                        robot.leftMotor.getCurrentPosition(),
+                        robot.rightMotor.getCurrentPosition());
                 telemetry.update();
 
                 // Allow time for other processes to run.

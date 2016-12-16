@@ -55,7 +55,9 @@ public class TeleopTankv7 extends LinearOpMode {
     }
     private void scissorLift(){
         float scissorPower = (gamepad2.right_trigger);
+        float reversescissorPower = (gamepad2.left_trigger);
         robot.scissorLift.setPower(scissorPower);
+        robot.scissorLift.setPower(-reversescissorPower);
         say("scissor lift power", scissorPower);
 
     }
