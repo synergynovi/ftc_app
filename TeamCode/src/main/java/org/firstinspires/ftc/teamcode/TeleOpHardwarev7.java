@@ -73,8 +73,8 @@ public class TeleOpHardwarev7 {
             launcher1.setDirection(DcMotorSimple.Direction.FORWARD);
             launcher1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             launcher2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            launcher1.setMaxSpeed(0);
-            launcher2.setMaxSpeed(0);
+            launcher1.setPower(0);
+            launcher2.setPower(0);
             return "Launcher initialized";
         } else {
             return "launcher motors not found! Kunal, put it back :)";
@@ -102,14 +102,14 @@ public class TeleOpHardwarev7 {
 
     private void setLauncherMaxSpeed(int speed) {
         if (!doesLauncherExist) return;
-        launcher1.setMaxSpeed(speed);
-        launcher2.setMaxSpeed(speed);
+        launcher1.setPower(speed);
+        launcher2.setPower(speed);
         launcher1.setPower(1);
         launcher2.setPower(1);
     }
 
     public int getLauncherMaxSpeed() {
-        return doesLauncherExist ? launcher1.getMaxSpeed() : 0;
+        return doesLauncherExist ? ((int) launcher1.getPower()) : 0;
     }
 
     public void changeLauncherMaxSpeedBy(int changeBy) {

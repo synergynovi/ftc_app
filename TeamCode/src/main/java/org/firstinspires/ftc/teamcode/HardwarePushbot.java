@@ -37,8 +37,8 @@ public class HardwarePushbot
     }
     private void setLauncherMaxSpeed(int speed) {
         if (!doesLauncherExist) return;
-        launcher1.setMaxSpeed(speed);
-        launcher2.setMaxSpeed(speed);
+        launcher1.setPower(speed);
+        launcher2.setPower(speed);
         launcher1.setPower(1);
         launcher2.setPower(1);
     }
