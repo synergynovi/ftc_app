@@ -1,0 +1,9 @@
+<toolSet name="External Tools">
+  <tool name="Android Device Monitor" description="Android Device Monitor" showInMainMenu="true" showInEditor="true" showInProject="true" showInSearchPopup="true" disabled="false" useConsole="true" showConsoleOnStdOut="false" showConsoleOnStdErr="false" synchronizeAfterRun="true">
+    <exec>
+      <option name="COMMAND" value="D:\Users\aparm\AppData\Local\Android\sdk\tools\monitor.bat" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="D:/Users/aparm/AppData/Local/Android/sdk/tools" />
+    </exec>
+  </tool>
+</toolSet>
